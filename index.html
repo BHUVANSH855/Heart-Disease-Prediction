@@ -929,7 +929,7 @@
                 }
 
                 // Send prediction request
-                const response = await fetch('http://localhost:5000/api/predict', {
+                const response = await fetch('/api/predict', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ data: [inputData] })
@@ -975,7 +975,7 @@
                 console.error('Prediction error:', error);
                 resultDiv.innerHTML = `
                     <div class="alert alert-warning">
-                        Error: ${error.message}. Please ensure the backend server is running at http://localhost:5000.
+                        Error: ${error.message}. Please try again or contact the administrator.
                     </div>`;
             } finally {
                 loadingSpinner.style.display = 'none';
@@ -998,7 +998,7 @@
                 const formData = new FormData();
                 formData.append('file', file);
 
-                const response = await fetch('http://localhost:5000/api/predict/batch', {
+                const response = await fetch('/api/predict/batch', {
                     method: 'POST',
                     body: formData
                 });
@@ -1044,7 +1044,7 @@
                 console.error('Batch prediction error:', error);
                 batchResults.innerHTML = `
                     <div class="alert alert-warning">
-                        Error: ${error.message}. Please ensure the backend server is running at http://localhost:5000.
+                        Error: ${error.message}. Please try again or contact the administrator.
                     </div>`;
             }
         }
@@ -1053,7 +1053,7 @@
         let trainingChart;
         async function fetchTrainingMetrics(retries = 3, delay = 1000) {
             try {
-                const response = await fetch('http://localhost:5000/api/metrics');
+                const response = await fetch('/api/metrics');
                 if (!response.ok) {
                     throw new Error(`Metrics request failed: ${response.statusText}`);
                 }

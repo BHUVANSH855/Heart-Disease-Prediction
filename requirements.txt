@@ -5,5 +5,3 @@ numpy
 tensorflow
 scikit-learn
 joblib
-matplotlib
-seaborn

@@ -826,6 +826,13 @@
     </div>
 
     <script>
+        // Backend API URL
+        const API_BASE_URL =
+            window.location.hostname === 'localhost' ||
+            window.location.hostname === '127.0.0.1'
+                ? 'http://127.0.0.1:5000'
+                : 'https://YOUR-RENDER-BACKEND.onrender.com';
+
         // Tab switching
         function showTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
@@ -929,7 +936,7 @@
                 }
 
                 // Send prediction request
-                const response = await fetch('/api/predict', {
+                const response = await fetch(`${API_BASE_URL}/api/predict`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ data: [inputData] })
@@ -998,7 +1005,7 @@
                 const formData = new FormData();
                 formData.append('file', file);
 
-                const response = await fetch('/api/predict/batch', {
+                const response = await fetch(`${API_BASE_URL}/api/predict/batch`, {
                     method: 'POST',
                     body: formData
                 });
@@ -1053,7 +1060,7 @@
         let trainingChart;
         async function fetchTrainingMetrics(retries = 3, delay = 1000) {
             try {
-                const response = await fetch('/api/metrics');
+                const response = await fetch(`${API_BASE_URL}/api/metrics`);
                 if (!response.ok) {
                     throw new Error(`Metrics request failed: ${response.statusText}`);
                 }

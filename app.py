@@ -13,11 +13,18 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %
 
 warnings.filterwarnings('ignore')
 
-app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+FRONTEND_DIR = os.path.join(BASE_DIR, 'frontend')
+
+app = Flask(
+    __name__,
+    static_folder=os.path.join(FRONTEND_DIR, 'static'),
+    static_url_path='/static'
+)
+
+CORS(app)
 
 # Load Model and Scaler
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 try:
     model = load_model(
@@ -67,7 +74,7 @@ def predict(df):
 def serve_frontend():
     app.logger.debug("Serving index.html")
     try:
-        return send_file(os.path.join(BASE_DIR, 'index.html'))
+        return send_file(os.path.join(FRONTEND_DIR, 'index.html'))
     except FileNotFoundError:
         app.logger.error("index.html not found")
         return jsonify({'error': 'Frontend file not found'}), 404

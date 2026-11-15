@@ -17,9 +17,15 @@ app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
 # Load Model and Scaler
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 try:
-    model = load_model('heart_disease_model.h5')
-    scaler = load('scaler.joblib')
+    model = load_model(
+        os.path.join(BASE_DIR, 'heart_disease_model.h5')
+    )
+    scaler = load(
+        os.path.join(BASE_DIR, 'scaler.joblib')
+    )
     app.logger.info("Model and scaler loaded successfully")
 except FileNotFoundError as e:
     app.logger.error(f"Error loading model or scaler: {e}")

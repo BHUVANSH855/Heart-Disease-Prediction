@@ -67,7 +67,7 @@ def predict(df):
 def serve_frontend():
     app.logger.debug("Serving index.html")
     try:
-        return send_file('index.html')
+        return send_file(os.path.join(BASE_DIR, 'index.html'))
     except FileNotFoundError:
         app.logger.error("index.html not found")
         return jsonify({'error': 'Frontend file not found'}), 404
